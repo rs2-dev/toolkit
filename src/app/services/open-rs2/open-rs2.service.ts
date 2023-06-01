@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { lastValueFrom, map, Observable } from 'rxjs';
 import { compareDesc, parseISO } from 'date-fns';
 import { OpenRs2BuildNumber, OpenRs2FileStore, OpenRs2Game, OpenRs2Scope } from './open-rs2.model';
 import { SortDirection } from '@angular/material/sort';
@@ -13,29 +13,47 @@ export class OpenRs2Service {
     constructor(private http: HttpClient) {
     }
 
-    getAvailableFileStores(
+    async getFileStoreDetails(
+        id: number,
+        scope: OpenRs2Scope = 'runescape'
+    ): Promise<OpenRs2FileStore | null> {
+        const fileStores = await this.getAvailableFileStores(scope);
+        return fileStores.find(fileStore => fileStore.id === id) || null;
+    }
+
+    async getAvailableFileStores(
         scope: OpenRs2Scope = 'runescape',
         game?: OpenRs2Game
-    ): Observable<OpenRs2FileStore[]> {
-        let availableFileStores$ = this.http.get<OpenRs2FileStore[]>(
-            `${this.openRS2Endpoint}/caches.json`
-        );
+    ): Promise<OpenRs2FileStore[]> {
+        let data: OpenRs2FileStore[] = [];
 
-        if (scope || game) {
-            availableFileStores$ = availableFileStores$.pipe(
-                map(
-                fileStores => this.sortFileStores(fileStores.filter(
-                        fileStore => (
-                            scope === null || scope === fileStore.scope
-                        ) && (
-                            game === null || game === fileStore.game
-                        )
-                    )
-                ))
-            );
+        const savedFileStoresStr = localStorage.getItem('openrs2_file_stores');
+        if (savedFileStoresStr) {
+            try {
+                data = JSON.parse(savedFileStoresStr);
+            } catch (e) {
+                console.error(`Error loading cached file store data`, e);
+            }
         }
 
-        return availableFileStores$;
+        if (!data?.length) {
+            data = await lastValueFrom(this.http.get<OpenRs2FileStore[]>(
+                `${this.openRS2Endpoint}/caches.json`
+            ));
+            localStorage.setItem('openrs2_file_stores', JSON.stringify(data));
+        }
+
+        if (scope || game) {
+            data = this.sortFileStores(data.filter(
+                fileStore => (
+                    !scope || scope === fileStore.scope
+                ) && (
+                    !game || game === fileStore.game
+                )
+            ));
+        }
+
+        return data;
     }
 
     sortFileStores(

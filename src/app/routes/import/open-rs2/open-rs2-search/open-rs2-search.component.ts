@@ -1,17 +1,17 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { OpenRs2Service } from '../../../../services/open-rs2/open-rs2.service';
-import { OpenRs2BuildNumber, OpenRs2FileStore } from '../../../../services/open-rs2/open-rs2.model';
-import { Sort } from '@angular/material/sort';
-import { lastValueFrom, map } from 'rxjs';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { Sort } from '@angular/material/sort';
+
+import { OpenRs2Service } from '../../../../services/open-rs2/open-rs2.service';
+import { OpenRs2BuildNumber, OpenRs2FileStore } from '../../../../services/open-rs2/open-rs2.model';
 
 @Component({
     selector: 'rs-open-rs2-search',
     templateUrl: './open-rs2-search.component.html',
     styleUrls: ['./open-rs2-search.component.scss']
 })
-export class OpenRs2SearchComponent implements OnInit, AfterViewInit {
+export class OpenRs2SearchComponent implements AfterViewInit {
 
     @ViewChild(MatTable)
     fileStoreTable!: MatTable<any>;
@@ -36,23 +36,11 @@ export class OpenRs2SearchComponent implements OnInit, AfterViewInit {
     currentSearch: string = '';
     currentGame: string = 'runescape';
 
-    constructor(private openRS2Service: OpenRs2Service) {
+    constructor(private openRs2Service: OpenRs2Service) {
     }
 
-    async ngOnInit() {
-        const savedFileStoresStr = localStorage.getItem('openrs2_file_stores');
-        if (savedFileStoresStr) {
-            try {
-                this.filteredData = JSON.parse(savedFileStoresStr);
-            } catch (e) {
-                console.error(`Error loading cached file store data`, e);
-            }
-        }
-
-        if (!this.filteredData?.length) {
-            this.filteredData = await lastValueFrom(this.openRS2Service.getAvailableFileStores());
-            localStorage.setItem('openrs2_file_stores', JSON.stringify(this.filteredData));
-        }
+    async ngAfterViewInit(): Promise<void> {
+        this.filteredData = await this.openRs2Service.getAvailableFileStores();
 
         this.data = JSON.parse(JSON.stringify(this.filteredData));
 
@@ -61,9 +49,7 @@ export class OpenRs2SearchComponent implements OnInit, AfterViewInit {
         this.dataSource = new MatTableDataSource(this.filteredData);
 
         this.filterData(false);
-    }
 
-    ngAfterViewInit() {
         this.dataSource.paginator = this.paginator;
     }
 
@@ -83,7 +69,7 @@ export class OpenRs2SearchComponent implements OnInit, AfterViewInit {
     filterData(render: boolean = true): void {
         if (this.currentSearch?.length) {
             this.filteredData = this.data.filter(fileStore => {
-                const builds = this.openRS2Service.formatBuilds(fileStore.builds);
+                const builds = this.openRs2Service.formatBuilds(fileStore.builds);
                 return builds.startsWith(this.currentSearch) || builds.endsWith(this.currentSearch) || builds.includes(this.currentSearch);
             });
         } else {
@@ -94,7 +80,7 @@ export class OpenRs2SearchComponent implements OnInit, AfterViewInit {
             this.filteredData = this.filteredData.filter(fileStore => fileStore.game === this.currentGame);
         }
 
-        this.filteredData = this.openRS2Service.sortFileStores(this.filteredData, this.currentSort.active, this.currentSort.direction);
+        this.filteredData = this.openRs2Service.sortFileStores(this.filteredData, this.currentSort.active, this.currentSort.direction);
 
         this.dataSource.data = this.filteredData;
 
@@ -104,7 +90,7 @@ export class OpenRs2SearchComponent implements OnInit, AfterViewInit {
     }
 
     formatBuilds(builds: OpenRs2BuildNumber[]): string {
-        return this.openRS2Service.formatBuilds(builds);
+        return this.openRs2Service.formatBuilds(builds);
     }
 
 }

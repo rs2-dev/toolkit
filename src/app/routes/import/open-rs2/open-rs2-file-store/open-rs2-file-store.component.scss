@@ -1,0 +1,31 @@
+.rs-open-rs2-file-store {
+    .rs-grid {
+        display: grid;
+        grid-gap: 32px;
+
+        label {
+            font-weight: bold;
+        }
+
+        + .rs-grid {
+            margin-top: 32px;
+        }
+    }
+
+    .rs-overview {
+        grid-template-columns: repeat(auto-fill, minmax(100px, auto));
+
+        div {
+            span {
+                display: block;
+                margin-top: 8px;
+            }
+        }
+    }
+
+    .rs-data {
+        .rs-grid {
+            grid-template-columns: repeat(auto-fill, minmax(250px, auto));
+        }
+    }
+}

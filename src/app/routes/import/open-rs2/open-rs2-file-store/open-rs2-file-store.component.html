@@ -1,1 +1,91 @@
-<p>open-rs2-file-store works!</p>
+<rs-page>
+    <span rs-header>OpenRS2 File Store</span>
+
+    <div rs-content class="rs-open-rs2-file-store" *ngIf="fileStore">
+        <h2 class="mat-title">Overview</h2>
+
+        <mat-card>
+            <mat-card-content class="rs-overview rs-grid">
+                <div>
+                    <label>OpenRS2 ID</label>
+                    <span>{{fileStore.id}}</span>
+                </div>
+
+                <div>
+                    <label>Game</label>
+                    <span>{{fileStore.game || '--'}}</span>
+                </div>
+
+                <div>
+                    <label>Builds</label>
+                    <span>{{formatBuilds(fileStore.builds) || '--'}}</span>
+                </div>
+
+                <div>
+                    <label>Date</label>
+                    <span>{{(fileStore.timestamp || '--') | date: 'YYYY-MM-dd'}}</span>
+                </div>
+
+                <div>
+                    <label>Language</label>
+                    <span>{{fileStore.language || '--'}}</span>
+                </div>
+
+                <div>
+                    <label>Environment</label>
+                    <span>{{fileStore.environment || '--'}}</span>
+                </div>
+
+                <div>
+                    <label>Sources</label>
+                    <span>{{fileStore.sources?.join(', ') || '--'}}</span>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+        <h2 class="mat-title">Data</h2>
+
+        <mat-card>
+            <mat-card-content class="rs-data">
+                <div class="rs-grid">
+                    <div>
+                        <label>Total Size:</label>
+                        &nbsp;
+                        <span>{{fileStore.size | number}} bytes</span>
+                    </div>
+
+                    <div>
+                        <label>Blocks:</label>
+                        &nbsp;
+                        <span>{{fileStore.blocks | number}}</span>
+                    </div>
+                </div>
+
+                <div class="rs-grid rs-percentages">
+                    <div>
+                        <label>Indexes:</label>
+                        &nbsp;
+                        <span>{{fileStore.valid_indexes}}/{{fileStore.indexes}} ({{fileStore.valid_indexes / fileStore.indexes * 100 | number}}%)</span>
+                    </div>
+
+                    <div>
+                        <label>Groups:</label>
+                        &nbsp;
+                        <span>{{fileStore.valid_groups}}/{{fileStore.groups}} ({{fileStore.valid_groups / fileStore.groups * 100 | number}}%)</span>
+                    </div>
+
+                    <div>
+                        <label>Encryption Keys:</label>
+                        &nbsp;
+                        <span *ngIf="fileStore.keys === 0">
+                            N/A
+                        </span>
+                        <span *ngIf="fileStore.keys !== 0">
+                            {{fileStore.valid_keys}}/{{fileStore.keys}} ({{fileStore.valid_keys / fileStore.keys * 100 | number}}%)
+                        </span>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</rs-page>
