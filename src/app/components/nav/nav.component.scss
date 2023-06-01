@@ -1,0 +1,22 @@
+.rs-nav {
+    display: flex;
+
+    h1, h2 {
+        font-weight: 400;
+    }
+
+    .rs-divider {
+        margin: 0 12px 0 12px;
+        height: 70%;
+        border-right-color: rgba(255, 255, 255, .15)
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    h2 {
+        font-size: 18px;
+        flex: 1;
+    }
+}
