@@ -1,6 +1,8 @@
 export type OpenRs2Scope = 'runescape' | string | null;
 export type OpenRs2Game = 'runescape' | 'darkscape' | string | null;
 
+export const openRs2Url = 'https://archive.openrs2.org';
+
 export const openRs2Labels: {[key: string]: string} = {
     'runescape': 'RuneScape',
     'darkscape': 'DarkScape',

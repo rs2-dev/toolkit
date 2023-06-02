@@ -2,13 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom, map, Observable } from 'rxjs';
 import { compareDesc, parseISO } from 'date-fns';
-import { OpenRs2BuildNumber, OpenRs2FileStore, OpenRs2Game, OpenRs2Scope } from './open-rs2.model';
+import { OpenRs2BuildNumber, OpenRs2FileStore, OpenRs2Game, OpenRs2Scope, openRs2Url } from './open-rs2.model';
 import { SortDirection } from '@angular/material/sort';
 
 @Injectable()
 export class OpenRs2Service {
-
-    readonly openRS2Endpoint = 'https://archive.openrs2.org';
 
     constructor(private http: HttpClient) {
     }
@@ -38,7 +36,7 @@ export class OpenRs2Service {
 
         if (!data?.length) {
             data = await lastValueFrom(this.http.get<OpenRs2FileStore[]>(
-                `${this.openRS2Endpoint}/caches.json`
+                `${openRs2Url}/caches.json`
             ));
             localStorage.setItem('openrs2_file_stores', JSON.stringify(data));
         }

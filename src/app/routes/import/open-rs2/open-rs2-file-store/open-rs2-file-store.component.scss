@@ -1,14 +1,10 @@
 .rs-open-rs2-file-store {
-    .rs-data-title {
-        margin-top: 42px;
-    }
-
     .rs-grid {
         display: grid;
         grid-gap: 32px;
 
         label {
-            font-weight: bold;
+            font-weight: 600;
         }
 
         + .rs-grid {
@@ -16,18 +12,9 @@
         }
     }
 
-    .rs-overview {
-        grid-template-columns: repeat(auto-fill, minmax(100px, auto));
-
-        div {
-            span {
-                display: block;
-                margin-top: 8px;
-            }
-        }
-    }
-
     .rs-data {
+        padding-top: 12px;
+
         .rs-grid {
             grid-template-columns: repeat(auto-fill, minmax(250px, auto));
         }
@@ -35,5 +22,10 @@
 
     .rs-file-store-links {
         margin-top: 42px;
+        text-align: center;
+
+        a {
+            margin: 8px;
+        }
     }
 }

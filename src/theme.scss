@@ -69,9 +69,14 @@ $md-royal-blue: (
 $toolkit-primary: mat.define-palette($md-teal);
 $toolkit-accent: mat.define-palette($md-royal-blue);
 
+$toolkit-typography: mat.define-typography-config(
+    $body-2: mat.define-typography-level(16px, 22px, 400),
+);
+
 $toolkit-theme: mat.define-dark-theme((
     color: (
         primary: $toolkit-primary,
         accent: $toolkit-accent
-    )
+    ),
+    typography: $toolkit-typography
 ));

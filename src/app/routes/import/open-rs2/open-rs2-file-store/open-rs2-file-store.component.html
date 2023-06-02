@@ -1,11 +1,10 @@
 <rs-page>
-    <span rs-header>OpenRS2 File Store</span>
-
     <div rs-content class="rs-open-rs2-file-store" *ngIf="fileStore">
-        <h2 class="mat-title">
+        <h1 class="mat-headline-5">
             OpenRS2 File Store (ID {{fileStore.id}})
-        </h2>
-        <h3 class="mat-subtitle-1">
+        </h1>
+
+        <h2 class="mat-headline-6">
             <span *ngIf="fileStore.game">
                 {{fileStore.game | openRs2Label}}
             </span>
@@ -16,52 +15,20 @@
                 {{fileStore.builds!.length === 1 ? 'Build' : 'Builds'}}
                 {{builds}}
             </span>
+            <span *ngIf="fileStore.language">
+                (Language: {{fileStore.language | openRs2Label}})
+            </span>
+        </h2>
+
+        <h3 class="mat-subtitle-1" *ngIf="fileStore.sources?.length">
+            {{fileStore.sources!.length === 1 ? 'Source' : 'Sources'}}: {{fileStore.sources!.join(', ')}}
         </h3>
 
-        <h2 class="mat-title">Overview</h2>
-
         <mat-card>
-            <mat-card-content class="rs-overview rs-grid">
-                <div>
-                    <label>OpenRS2 ID</label>
-                    <span>{{fileStore.id}}</span>
-                </div>
+            <mat-card-header>
+                <mat-card-title>Data</mat-card-title>
+            </mat-card-header>
 
-                <div>
-                    <label>Game</label>
-                    <span>{{fileStore.game || '--'}}</span>
-                </div>
-
-                <div>
-                    <label>Builds</label>
-                    <span>{{builds || '--'}}</span>
-                </div>
-
-                <div>
-                    <label>Date</label>
-                    <span>{{(fileStore.timestamp || '--') | date: 'YYYY-MM-dd'}}</span>
-                </div>
-
-                <div>
-                    <label>Language</label>
-                    <span>{{fileStore.language || '--'}}</span>
-                </div>
-
-                <div>
-                    <label>Environment</label>
-                    <span>{{fileStore.environment || '--'}}</span>
-                </div>
-
-                <div>
-                    <label>Sources</label>
-                    <span>{{fileStore.sources?.join(', ') || '--'}}</span>
-                </div>
-            </mat-card-content>
-        </mat-card>
-
-        <h2 class="mat-title rs-data-title">Data</h2>
-
-        <mat-card>
             <mat-card-content class="rs-data">
                 <div class="rs-grid">
                     <div>
@@ -105,9 +72,29 @@
         </mat-card>
 
         <div class="rs-file-store-links">
+            <a mat-fab extended [href]="openRs2Link" target="_blank">
+                <mat-icon>north_east</mat-icon>
+                OpenRS2
+            </a>
+
+            <a mat-fab extended [href]="mapLink" target="_blank">
+                <mat-icon>map</mat-icon>
+                World Map
+            </a>
+
+            <a mat-fab extended [href]="encryptionKeysLink" target="_blank">
+                <mat-icon>key</mat-icon>
+                Keys
+            </a>
+
+            <a mat-fab extended [href]="diskStoreLink">
+                <mat-icon>download</mat-icon>
+                Download
+            </a>
+
             <a mat-fab extended routerLink=".">
-                <mat-icon>favorite</mat-icon>
-                View Map
+                <mat-icon>system_update_alt</mat-icon>
+                Import to Toolkit
             </a>
         </div>
     </div>

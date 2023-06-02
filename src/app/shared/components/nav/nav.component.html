@@ -1,7 +1,18 @@
-<mat-toolbar color="primary" class="rs-nav">
+<mat-toolbar class="rs-nav" color="primary">
     <h1>RS2 Toolkit</h1>
 
-    <mat-divider [vertical]="true" class="rs-divider"></mat-divider>
+    <mat-divider class="rs-divider" vertical></mat-divider>
 
-    <h2><ng-content></ng-content></h2>
+    <button class="rs-import-button" mat-stroked-button routerLink="/import">
+        Import
+    </button>
+
+    <button class="rs-import-from-button" mat-stroked-button [matMenuTriggerFor]="menu">
+        <mat-icon class="rs-import-from-icon">keyboard_arrow_down</mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item>From Computer</button>
+        <button mat-menu-item routerLink="/import/openrs2">From OpenRS2</button>
+    </mat-menu>
 </mat-toolbar>

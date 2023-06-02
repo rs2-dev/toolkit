@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
     selector: 'rs-nav',
@@ -6,5 +7,8 @@ import { Component } from '@angular/core';
     styleUrls: ['./nav.component.scss']
 })
 export class NavComponent {
+
+    @ViewChild(MatMenuTrigger)
+    menuTrigger!: MatMenuTrigger;
 
 }

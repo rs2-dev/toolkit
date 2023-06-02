@@ -4,6 +4,7 @@
 @include mat.core();
 
 @include mat.all-component-themes($toolkit-theme);
+@include mat.typography-hierarchy($toolkit-typography);
 
 html, body {
     height: 100%;
@@ -12,4 +13,8 @@ html, body {
 body {
     margin: 0;
     font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+.mdc-fab--extended, .mdc-button {
+    text-transform: uppercase;
 }
