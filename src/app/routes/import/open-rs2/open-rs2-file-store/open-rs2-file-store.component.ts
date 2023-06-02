@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { OpenRs2BuildNumber, OpenRs2FileStore, OpenRs2Scope } from '../../../../services/open-rs2/open-rs2.model';
-import { OpenRs2Service } from '../../../../services/open-rs2/open-rs2.service';
+import { OpenRs2BuildNumber, OpenRs2FileStore, OpenRs2Scope } from '../../../../shared/services/open-rs2/open-rs2.model';
+import { OpenRs2Service } from '../../../../shared/services/open-rs2/open-rs2.service';
 
 @Component({
     selector: 'rs-open-rs2-file-store',
@@ -55,8 +55,8 @@ export class OpenRs2FileStoreComponent implements OnInit, OnDestroy {
         this.routeSubscription.unsubscribe();
     }
 
-    formatBuilds(builds: OpenRs2BuildNumber[] | null): string {
-        return this.openRs2Service.formatBuilds(builds);
+    get builds(): string {
+        return this.openRs2Service.formatBuilds(this.fileStore?.builds || null);
     }
 
 }

@@ -2,6 +2,22 @@
     <span rs-header>OpenRS2 File Store</span>
 
     <div rs-content class="rs-open-rs2-file-store" *ngIf="fileStore">
+        <h2 class="mat-title">
+            OpenRS2 File Store (ID {{fileStore.id}})
+        </h2>
+        <h3 class="mat-subtitle-1">
+            <span *ngIf="fileStore.game">
+                {{fileStore.game | openRs2Label}}
+            </span>
+            <span *ngIf="fileStore.environment">
+                {{fileStore.environment | openRs2Label}}
+            </span>
+            <span *ngIf="fileStore.builds?.length">
+                {{fileStore.builds!.length === 1 ? 'Build' : 'Builds'}}
+                {{builds}}
+            </span>
+        </h3>
+
         <h2 class="mat-title">Overview</h2>
 
         <mat-card>
@@ -18,7 +34,7 @@
 
                 <div>
                     <label>Builds</label>
-                    <span>{{formatBuilds(fileStore.builds) || '--'}}</span>
+                    <span>{{builds || '--'}}</span>
                 </div>
 
                 <div>
@@ -43,7 +59,7 @@
             </mat-card-content>
         </mat-card>
 
-        <h2 class="mat-title">Data</h2>
+        <h2 class="mat-title rs-data-title">Data</h2>
 
         <mat-card>
             <mat-card-content class="rs-data">
@@ -65,13 +81,13 @@
                     <div>
                         <label>Indexes:</label>
                         &nbsp;
-                        <span>{{fileStore.valid_indexes}}/{{fileStore.indexes}} ({{fileStore.valid_indexes / fileStore.indexes * 100 | number}}%)</span>
+                        <span>{{fileStore.valid_indexes | number}} / {{fileStore.indexes | number}} ({{fileStore.valid_indexes / fileStore.indexes * 100 | number}}%)</span>
                     </div>
 
                     <div>
                         <label>Groups:</label>
                         &nbsp;
-                        <span>{{fileStore.valid_groups}}/{{fileStore.groups}} ({{fileStore.valid_groups / fileStore.groups * 100 | number}}%)</span>
+                        <span>{{fileStore.valid_groups | number}} / {{fileStore.groups | number}} ({{fileStore.valid_groups / fileStore.groups * 100 | number}}%)</span>
                     </div>
 
                     <div>
@@ -81,11 +97,18 @@
                             N/A
                         </span>
                         <span *ngIf="fileStore.keys !== 0">
-                            {{fileStore.valid_keys}}/{{fileStore.keys}} ({{fileStore.valid_keys / fileStore.keys * 100 | number}}%)
+                            {{fileStore.valid_keys | number}} / {{fileStore.keys | number}} ({{fileStore.valid_keys / fileStore.keys * 100 | number}}%)
                         </span>
                     </div>
                 </div>
             </mat-card-content>
         </mat-card>
+
+        <div class="rs-file-store-links">
+            <a mat-fab extended routerLink=".">
+                <mat-icon>favorite</mat-icon>
+                View Map
+            </a>
+        </div>
     </div>
 </rs-page>

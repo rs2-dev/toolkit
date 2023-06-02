@@ -1,6 +1,17 @@
 export type OpenRs2Scope = 'runescape' | string | null;
 export type OpenRs2Game = 'runescape' | 'darkscape' | string | null;
 
+export const openRs2Labels: {[key: string]: string} = {
+    'runescape': 'RuneScape',
+    'darkscape': 'DarkScape',
+    'live': 'Live',
+    'beta': 'Beta',
+    'en': 'EN',
+    'de': 'DE',
+    'fr': 'FR',
+    'pt': 'PT'
+};
+
 export interface OpenRs2BuildNumber {
     major: number | null;
     minor: number | null;

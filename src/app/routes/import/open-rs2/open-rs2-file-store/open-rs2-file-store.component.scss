@@ -1,4 +1,8 @@
 .rs-open-rs2-file-store {
+    .rs-data-title {
+        margin-top: 42px;
+    }
+
     .rs-grid {
         display: grid;
         grid-gap: 32px;
@@ -27,5 +31,9 @@
         .rs-grid {
             grid-template-columns: repeat(auto-fill, minmax(250px, auto));
         }
+    }
+
+    .rs-file-store-links {
+        margin-top: 42px;
     }
 }
