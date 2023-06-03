@@ -3,8 +3,8 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 
-import { OpenRs2Service } from '../../../../shared/services/open-rs2/open-rs2.service';
-import { OpenRs2Build, OpenRs2Cache } from '../../../../shared/services/open-rs2/open-rs2.model';
+import { OpenRs2Service } from '@shared/services/open-rs2/open-rs2.service';
+import { OpenRs2Build, OpenRs2Cache } from '@shared/services/open-rs2/open-rs2.model';
 
 @Component({
     selector: 'rs-open-rs2-search',

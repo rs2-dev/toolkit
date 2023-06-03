@@ -6,8 +6,8 @@ import {
     OpenRs2Cache,
     OpenRs2Scope,
     openRs2Url
-} from '../../../../shared/services/open-rs2/open-rs2.model';
-import { OpenRs2Service } from '../../../../shared/services/open-rs2/open-rs2.service';
+} from '@shared/services/open-rs2/open-rs2.model';
+import { OpenRs2Service } from '@shared/services/open-rs2/open-rs2.service';
 
 @Component({
     selector: 'rs-open-rs2-cache',
