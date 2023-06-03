@@ -7,39 +7,42 @@
         font-size: 24px;
     }
 
-    .rs-divider {
-        margin: 0 12px 0 12px;
-        height: 70%;
-        border-right-color: rgba(0, 0, 0, .15);
-    }
+    nav {
+        margin-left: 16px;
 
-    button {
-        margin-left: 4px;
-        background: rgba(0, 0, 0, .2);
+        button {
+            margin-left: 4px;
+            font-size: 16px;
+            font-weight: 400;
 
-        &.rs-active, &:hover, &:active {
-            background: rgba(0, 0, 0, .4);
-        }
+            &.rs-active, &:hover {
+                background-color: rgba(255, 255, 255, .12);
+            }
 
-        &.rs-import-button {
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-        }
+            &.rs-active:hover {
+                background-color: rgba(255, 255, 255, .2);
+            }
 
-        &.rs-import-from-button {
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-            border-left-width: 0;
-            margin-left: 0;
-            padding: 0 6px;
-            min-width: 0;
+            &.rs-import-button {
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+            }
 
-            .rs-import-from-icon {
-                margin: 0;
-                $size: 1.5rem;
-                font-size: $size;
-                height: $size;
-                width: $size;
+            &.rs-import-from-button {
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+                border-left-width: 0;
+                margin-left: 0;
+                padding: 0 6px;
+                min-width: 0;
+
+                .rs-import-from-icon {
+                    margin: 0;
+                    $size: 1.5rem;
+                    font-size: $size;
+                    height: $size;
+                    width: $size;
+                }
             }
         }
     }

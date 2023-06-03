@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom, map, Observable } from 'rxjs';
 import { compareDesc, parseISO } from 'date-fns';
-import { OpenRs2BuildNumber, OpenRs2FileStore, OpenRs2Game, OpenRs2Scope, openRs2Url } from './open-rs2.model';
+import { OpenRs2Build, OpenRs2Cache, OpenRs2Game, OpenRs2Scope, openRs2Url } from './open-rs2.model';
 import { SortDirection } from '@angular/material/sort';
 
 @Injectable()
@@ -11,42 +11,42 @@ export class OpenRs2Service {
     constructor(private http: HttpClient) {
     }
 
-    async getFileStoreDetails(
+    async getCacheDetails(
         id: number,
         scope: OpenRs2Scope = 'runescape'
-    ): Promise<OpenRs2FileStore | null> {
-        const fileStores = await this.getAvailableFileStores(scope);
-        return fileStores.find(fileStore => fileStore.id === id) || null;
+    ): Promise<OpenRs2Cache | null> {
+        const caches = await this.getAvailableCaches(scope);
+        return caches.find(cache => cache.id === id) || null;
     }
 
-    async getAvailableFileStores(
+    async getAvailableCaches(
         scope: OpenRs2Scope = 'runescape',
         game?: OpenRs2Game
-    ): Promise<OpenRs2FileStore[]> {
-        let data: OpenRs2FileStore[] = [];
+    ): Promise<OpenRs2Cache[]> {
+        let data: OpenRs2Cache[] = [];
 
-        const savedFileStoresStr = localStorage.getItem('openrs2_file_stores');
-        if (savedFileStoresStr) {
+        const savedCachesStr = localStorage.getItem('openrs2_caches');
+        if (savedCachesStr) {
             try {
-                data = JSON.parse(savedFileStoresStr);
+                data = JSON.parse(savedCachesStr);
             } catch (e) {
-                console.error(`Error loading cached file store data`, e);
+                console.error(`Error loading cached OpenRS2 cache list`, e);
             }
         }
 
         if (!data?.length) {
-            data = await lastValueFrom(this.http.get<OpenRs2FileStore[]>(
+            data = await lastValueFrom(this.http.get<OpenRs2Cache[]>(
                 `${openRs2Url}/caches.json`
             ));
-            localStorage.setItem('openrs2_file_stores', JSON.stringify(data));
+            localStorage.setItem('openrs2_caches', JSON.stringify(data));
         }
 
         if (scope || game) {
-            data = this.sortFileStores(data.filter(
-                fileStore => (
-                    !scope || scope === fileStore.scope
+            data = this.sortCaches(data.filter(
+                cache => (
+                    !scope || scope === cache.scope
                 ) && (
-                    !game || game === fileStore.game
+                    !game || game === cache.game
                 )
             ));
         }
@@ -54,12 +54,12 @@ export class OpenRs2Service {
         return data;
     }
 
-    sortFileStores(
-        fileStores: OpenRs2FileStore[],
+    sortCaches(
+        caches: OpenRs2Cache[],
         sortField: string = 'builds',
         sortDirection: SortDirection = 'desc'
-    ): OpenRs2FileStore[] {
-        let sorted = fileStores;
+    ): OpenRs2Cache[] {
+        let sorted = caches;
 
         if (sortField === 'game') {
             sorted = sorted.sort((a, b) => {
@@ -93,10 +93,10 @@ export class OpenRs2Service {
     }
 
     sortByBuilds(
-        fileStores: OpenRs2FileStore[],
+        caches: OpenRs2Cache[],
         sortDirection: SortDirection = 'desc'
-    ): OpenRs2FileStore[] {
-        const sorted = fileStores.sort((a, b) => {
+    ): OpenRs2Cache[] {
+        const sorted = caches.sort((a, b) => {
             if (!a.builds?.length) {
                 return 1;
             }
@@ -114,7 +114,7 @@ export class OpenRs2Service {
         return sortDirection === 'asc' ? sorted.reverse() : sorted;
     }
 
-    formatBuilds(builds: OpenRs2BuildNumber[] | null): string {
+    formatBuilds(builds: OpenRs2Build[] | null): string {
         if (!builds?.length) {
             return '';
         }
@@ -122,7 +122,7 @@ export class OpenRs2Service {
         return builds.map(b => this.formatBuild(b)).join(', ');
     }
 
-    formatBuild(build: OpenRs2BuildNumber): string {
+    formatBuild(build: OpenRs2Build): string {
         if (build === null || (build.major === null && build.minor === null)) {
             return '';
         }

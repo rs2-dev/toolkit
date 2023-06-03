@@ -1,4 +1,4 @@
-.rs-open-rs2-file-store {
+.rs-open-rs2-cache {
     .rs-grid {
         display: grid;
         grid-gap: 32px;
@@ -20,12 +20,11 @@
         }
     }
 
-    .rs-file-store-links {
-        margin-top: 42px;
-        text-align: center;
+    .rs-cache-links {
+        margin: 12px 0;
 
         a {
-            margin: 8px;
+            margin: 8px 16px 8px 0;
         }
     }
 }

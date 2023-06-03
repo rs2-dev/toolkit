@@ -3,23 +3,23 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import {
-    OpenRs2FileStore,
+    OpenRs2Cache,
     OpenRs2Scope,
     openRs2Url
 } from '../../../../shared/services/open-rs2/open-rs2.model';
 import { OpenRs2Service } from '../../../../shared/services/open-rs2/open-rs2.service';
 
 @Component({
-    selector: 'rs-open-rs2-file-store',
-    templateUrl: './open-rs2-file-store.component.html',
-    styleUrls: ['./open-rs2-file-store.component.scss']
+    selector: 'rs-open-rs2-cache',
+    templateUrl: './open-rs2-cache.component.html',
+    styleUrls: ['./open-rs2-cache.component.scss']
 })
-export class OpenRs2FileStoreComponent implements OnInit, OnDestroy {
+export class OpenRs2CacheComponent implements OnInit, OnDestroy {
 
     routeSubscription!: Subscription;
     scope: OpenRs2Scope | null = null;
     id: number | null = null;
-    fileStore: OpenRs2FileStore | null = null;
+    cache: OpenRs2Cache | null = null;
 
     constructor(
         private route: ActivatedRoute,
@@ -33,22 +33,22 @@ export class OpenRs2FileStoreComponent implements OnInit, OnDestroy {
             this.scope = null;
             this.id = null;
 
-            if (params['fileStoreScope']) {
-                this.scope = params['fileStoreScope'];
+            if (params['cacheScope']) {
+                this.scope = params['cacheScope'];
             }
 
-            if (params['fileStoreId']) {
-                this.id = parseInt(params['fileStoreId']);
+            if (params['cacheId']) {
+                this.id = parseInt(params['cacheId']);
             }
 
             if (!this.scope || !this.id || isNaN(this.id)) {
                 this.router.navigate(['/', 'import', 'openrs2']);
             } else {
-                this.fileStore = await this.openRs2Service.getFileStoreDetails(this.id, this.scope);
+                this.cache = await this.openRs2Service.getCacheDetails(this.id, this.scope);
 
-                console.log(this.fileStore);
+                console.log(this.cache);
 
-                if (!this.fileStore) {
+                if (!this.cache) {
                     this.router.navigate(['/', 'import', 'openrs2']);
                 }
             }
@@ -60,39 +60,39 @@ export class OpenRs2FileStoreComponent implements OnInit, OnDestroy {
     }
 
     get builds(): string {
-        return this.openRs2Service.formatBuilds(this.fileStore?.builds || null);
+        return this.openRs2Service.formatBuilds(this.cache?.builds || null);
     }
 
     get openRs2Link(): string {
-        if (!this.fileStore) {
+        if (!this.cache) {
             return '';
         }
 
-        return `https://archive.openrs2.org/caches/${this.fileStore.scope}/${this.fileStore.id}`;
+        return `https://archive.openrs2.org/caches/${this.cache.scope}/${this.cache.id}`;
     }
 
     get mapLink(): string {
-        if (!this.fileStore) {
+        if (!this.cache) {
             return '';
         }
 
-        return `${openRs2Url}/caches/${this.fileStore.scope}/${this.fileStore.id}/map.png`;
+        return `${openRs2Url}/caches/${this.cache.scope}/${this.cache.id}/map.png`;
     }
 
     get encryptionKeysLink(): string {
-        if (!this.fileStore) {
+        if (!this.cache) {
             return '';
         }
 
-        return `${openRs2Url}/caches/${this.fileStore.scope}/${this.fileStore.id}/keys.json`;
+        return `${openRs2Url}/caches/${this.cache.scope}/${this.cache.id}/keys.json`;
     }
 
     get diskStoreLink(): string {
-        if (!this.fileStore) {
+        if (!this.cache) {
             return '';
         }
 
-        return `${openRs2Url}/caches/${this.fileStore.scope}/${this.fileStore.id}/disk.zip`;
+        return `${openRs2Url}/caches/${this.cache.scope}/${this.cache.id}/disk.zip`;
     }
 
 }

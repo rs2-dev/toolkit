@@ -33,21 +33,21 @@ $md-teal: (
     )
 );
 
-$md-royal-blue: (
-    50 : #e8edfb,
-    100 : #c6d2f6,
-    200 : #a0b4f0,
-    300 : #7a96ea,
-    400 : #5e80e6,
-    500 : #4169e1,
-    600 : #3b61dd,
-    700 : #3256d9,
-    800 : #2a4cd5,
-    900 : #1c3bcd,
-    A100 : #ffffff,
-    A200 : #cfd6ff,
-    A400 : #9cabff,
-    A700 : #8395ff,
+$md-steel-blue: (
+    50 : #e9f0f6,
+    100 : #c8dae9,
+    200 : #a3c1da,
+    300 : #7ea8cb,
+    400 : #6295bf,
+    500 : #4682b4,
+    600 : #3f7aad,
+    700 : #376fa4,
+    800 : #2f659c,
+    900 : #20528c,
+    A100 : #c9e0ff,
+    A200 : #96c3ff,
+    A400 : #63a7ff,
+    A700 : #4998ff,
     contrast: (
         50 : #000000,
         100 : #000000,
@@ -67,7 +67,7 @@ $md-royal-blue: (
 );
 
 $toolkit-primary: mat.define-palette($md-teal);
-$toolkit-accent: mat.define-palette($md-royal-blue);
+$toolkit-accent: mat.define-palette($md-steel-blue);
 
 $toolkit-typography: mat.define-typography-config(
     $body-2: mat.define-typography-level(16px, 22px, 400),

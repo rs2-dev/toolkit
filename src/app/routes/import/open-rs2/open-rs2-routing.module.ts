@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { OpenRs2Component } from './open-rs2.component';
 import { OpenRs2SearchComponent } from './open-rs2-search/open-rs2-search.component';
-import { OpenRs2FileStoreComponent } from './open-rs2-file-store/open-rs2-file-store.component';
+import { OpenRs2CacheComponent } from './open-rs2-cache/open-rs2-cache.component';
 
 const routes: Routes = [
     {
@@ -11,8 +11,8 @@ const routes: Routes = [
         component: OpenRs2Component,
         children: [
             {
-                path: ':fileStoreScope/:fileStoreId',
-                component: OpenRs2FileStoreComponent
+                path: ':cacheScope/:cacheId',
+                component: OpenRs2CacheComponent
             },
             {
                 path: '',

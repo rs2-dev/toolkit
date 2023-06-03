@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { OpenRs2RoutingModule } from './open-rs2-routing.module';
 import { OpenRs2Component } from './open-rs2.component';
 import { OpenRs2SearchComponent } from './open-rs2-search/open-rs2-search.component';
-import { OpenRs2FileStoreComponent } from './open-rs2-file-store/open-rs2-file-store.component';
+import { OpenRs2CacheComponent } from './open-rs2-cache/open-rs2-cache.component';
 import { NavModule } from '../../../shared/components/nav/nav.module';
 import { OpenRs2Service } from '../../../shared/services/open-rs2/open-rs2.service';
 import { PageModule } from '../../../shared/components/page/page.module';
@@ -25,7 +25,7 @@ import { OpenRs2LabelPipe } from '../../../shared/pipes/open-rs2-label.pipe';
     declarations: [
         OpenRs2Component,
         OpenRs2SearchComponent,
-        OpenRs2FileStoreComponent
+        OpenRs2CacheComponent
     ],
     imports: [
         CommonModule,

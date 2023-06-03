@@ -14,18 +14,18 @@ export const openRs2Labels: {[key: string]: string} = {
     'pt': 'PT'
 };
 
-export interface OpenRs2BuildNumber {
+export interface OpenRs2Build {
     major: number | null;
     minor: number | null;
 }
 
-export interface OpenRs2FileStore {
+export interface OpenRs2Cache {
     id: number;
     scope: OpenRs2Scope;
     game: OpenRs2Game;
     environment: 'live' | 'beta' | string | null;
     language: 'en' | 'de' | 'fr' | 'pt' | string | null;
-    builds: OpenRs2BuildNumber[] | null;
+    builds: OpenRs2Build[] | null;
     timestamp: string | null; // ISO 8601 format
     sources: string[] | null;
     valid_indexes: number;

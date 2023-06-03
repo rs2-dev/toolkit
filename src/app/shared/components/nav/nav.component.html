@@ -1,18 +1,23 @@
 <mat-toolbar class="rs-nav" color="primary">
     <h1>RS2 Toolkit</h1>
 
-    <mat-divider class="rs-divider" vertical></mat-divider>
+    <nav>
+        <button mat-stroked-button routerLink="/caches" routerLinkActive="rs-active">
+            My Caches
+        </button>
 
-    <button class="rs-import-button" mat-stroked-button routerLink="/import">
-        Import
-    </button>
+        <button class="rs-import-button" mat-stroked-button
+                routerLink="/import" routerLinkActive="rs-active">
+            Import
+        </button>
 
-    <button class="rs-import-from-button" mat-stroked-button [matMenuTriggerFor]="menu">
-        <mat-icon class="rs-import-from-icon">keyboard_arrow_down</mat-icon>
-    </button>
+        <button class="rs-import-from-button" mat-stroked-button [matMenuTriggerFor]="menu">
+            <mat-icon class="rs-import-from-icon">keyboard_arrow_down</mat-icon>
+        </button>
 
-    <mat-menu #menu="matMenu">
-        <button mat-menu-item>From Computer</button>
-        <button mat-menu-item routerLink="/import/openrs2">From OpenRS2</button>
-    </mat-menu>
+        <mat-menu #menu="matMenu">
+            <!--<button mat-menu-item>From Computer</button>-->
+            <button mat-menu-item routerLink="/import/openrs2">From OpenRS2</button>
+        </mat-menu>
+    </nav>
 </mat-toolbar>

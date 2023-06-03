@@ -1,0 +1,101 @@
+<rs-page>
+    <div rs-content class="rs-open-rs2-cache" *ngIf="cache">
+        <h1 class="mat-headline-5">
+            OpenRS2 Cache (ID {{cache.id}})
+        </h1>
+
+        <h2 class="mat-headline-6">
+            <span *ngIf="cache.game">
+                {{cache.game | openRs2Label}}
+            </span>
+            <span *ngIf="cache.environment">
+                {{cache.environment | openRs2Label}}
+            </span>
+            <span *ngIf="cache.builds?.length">
+                {{cache.builds!.length === 1 ? 'Build' : 'Builds'}}
+                {{builds}}
+            </span>
+            <span *ngIf="cache.language">
+                (Language: {{cache.language | openRs2Label}})
+            </span>
+        </h2>
+
+        <h3 class="mat-subtitle-1" *ngIf="cache.sources?.length">
+            {{cache.sources!.length === 1 ? 'Source' : 'Sources'}}: {{cache.sources!.join(', ')}}
+        </h3>
+
+        <div class="rs-cache-links">
+            <a mat-fab extended routerLink="." color="primary">
+                <mat-icon>system_update_alt</mat-icon>
+                Import to Toolkit
+            </a>
+
+            <a mat-fab extended [href]="openRs2Link" target="_blank">
+                <mat-icon>north_east</mat-icon>
+                OpenRS2
+            </a>
+
+            <a mat-fab extended [href]="mapLink" target="_blank">
+                <mat-icon>map</mat-icon>
+                World Map
+            </a>
+
+            <a mat-fab extended [href]="encryptionKeysLink" target="_blank">
+                <mat-icon>key</mat-icon>
+                Keys
+            </a>
+
+            <a mat-fab extended [href]="diskStoreLink">
+                <mat-icon>download</mat-icon>
+                Download
+            </a>
+        </div>
+
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Data</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content class="rs-data">
+                <div class="rs-grid">
+                    <div>
+                        <label>Total Size:</label>
+                        &nbsp;
+                        <span>{{cache.size | number}} bytes</span>
+                    </div>
+
+                    <div>
+                        <label>Blocks:</label>
+                        &nbsp;
+                        <span>{{cache.blocks | number}}</span>
+                    </div>
+                </div>
+
+                <div class="rs-grid rs-percentages">
+                    <div>
+                        <label>Indexes:</label>
+                        &nbsp;
+                        <span>{{cache.valid_indexes | number}} / {{cache.indexes | number}} ({{cache.valid_indexes / cache.indexes * 100 | number}}%)</span>
+                    </div>
+
+                    <div>
+                        <label>Groups:</label>
+                        &nbsp;
+                        <span>{{cache.valid_groups | number}} / {{cache.groups | number}} ({{cache.valid_groups / cache.groups * 100 | number}}%)</span>
+                    </div>
+
+                    <div>
+                        <label>Encryption Keys:</label>
+                        &nbsp;
+                        <span *ngIf="cache.keys === 0">
+                            N/A
+                        </span>
+                        <span *ngIf="cache.keys !== 0">
+                            {{cache.valid_keys | number}} / {{cache.keys | number}} ({{cache.valid_keys / cache.keys * 100 | number}}%)
+                        </span>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</rs-page>

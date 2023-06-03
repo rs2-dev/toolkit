@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 
 import { OpenRs2Service } from '../../../../shared/services/open-rs2/open-rs2.service';
-import { OpenRs2BuildNumber, OpenRs2FileStore } from '../../../../shared/services/open-rs2/open-rs2.model';
+import { OpenRs2Build, OpenRs2Cache } from '../../../../shared/services/open-rs2/open-rs2.model';
 
 @Component({
     selector: 'rs-open-rs2-search',
@@ -14,7 +14,7 @@ import { OpenRs2BuildNumber, OpenRs2FileStore } from '../../../../shared/service
 export class OpenRs2SearchComponent implements AfterViewInit {
 
     @ViewChild(MatTable)
-    fileStoreTable!: MatTable<any>;
+    cacheListTable!: MatTable<any>;
 
     @ViewChild(MatPaginator)
     paginator!: MatPaginator;
@@ -23,9 +23,9 @@ export class OpenRs2SearchComponent implements AfterViewInit {
         'game', 'builds', 'timestamp', 'actions'
     ];
 
-    dataSource!: MatTableDataSource<OpenRs2FileStore>;
-    filteredData: OpenRs2FileStore[] = [];
-    data: OpenRs2FileStore[] = [];
+    dataSource!: MatTableDataSource<OpenRs2Cache>;
+    filteredData: OpenRs2Cache[] = [];
+    data: OpenRs2Cache[] = [];
 
     games: string[] = [];
 
@@ -40,7 +40,7 @@ export class OpenRs2SearchComponent implements AfterViewInit {
     }
 
     async ngAfterViewInit(): Promise<void> {
-        this.filteredData = await this.openRs2Service.getAvailableFileStores();
+        this.filteredData = await this.openRs2Service.getAvailableCaches();
 
         this.data = JSON.parse(JSON.stringify(this.filteredData));
 
@@ -68,8 +68,8 @@ export class OpenRs2SearchComponent implements AfterViewInit {
 
     filterData(render: boolean = true): void {
         if (this.currentSearch?.length) {
-            this.filteredData = this.data.filter(fileStore => {
-                const builds = this.openRs2Service.formatBuilds(fileStore.builds);
+            this.filteredData = this.data.filter(cache => {
+                const builds = this.openRs2Service.formatBuilds(cache.builds);
                 return builds.startsWith(this.currentSearch) || builds.endsWith(this.currentSearch) || builds.includes(this.currentSearch);
             });
         } else {
@@ -77,19 +77,19 @@ export class OpenRs2SearchComponent implements AfterViewInit {
         }
 
         if (this.currentGame?.length) {
-            this.filteredData = this.filteredData.filter(fileStore => fileStore.game === this.currentGame);
+            this.filteredData = this.filteredData.filter(cache => cache.game === this.currentGame);
         }
 
-        this.filteredData = this.openRs2Service.sortFileStores(this.filteredData, this.currentSort.active, this.currentSort.direction);
+        this.filteredData = this.openRs2Service.sortCaches(this.filteredData, this.currentSort.active, this.currentSort.direction);
 
         this.dataSource.data = this.filteredData;
 
         if (render) {
-            this.fileStoreTable.renderRows();
+            this.cacheListTable.renderRows();
         }
     }
 
-    formatBuilds(builds: OpenRs2BuildNumber[]): string {
+    formatBuilds(builds: OpenRs2Build[]): string {
         return this.openRs2Service.formatBuilds(builds);
     }
 
