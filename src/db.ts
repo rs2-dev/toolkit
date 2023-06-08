@@ -1,11 +1,12 @@
 import Dexie, { Table } from 'dexie';
+import { DataFile, IndexFile } from '@rs2/file-store/lib/file-store';
 
 export interface CacheEntity {
     id?: number;
     name: string;
     openRs2Id?: number;
-    dataFile?: Buffer;
-    indexFiles?: Buffer[];
+    dataFile?: DataFile;
+    indexFiles?: IndexFile[];
 }
 
 export class AppDB extends Dexie {

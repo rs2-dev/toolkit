@@ -1,9 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { SortDirection } from '@angular/material/sort';
 import { lastValueFrom, map, Observable } from 'rxjs';
 import { compareDesc, parseISO } from 'date-fns';
+import { Buffer } from 'buffer';
+import * as JSZip from 'jszip';
 import { OpenRs2Build, OpenRs2Cache, OpenRs2Game, OpenRs2Scope, openRs2Url } from './open-rs2.model';
-import { SortDirection } from '@angular/material/sort';
+import {
+    PackedFileStore,
+    packedFileStoreFileName, readPackedFileStore
+} from '@rs2/file-store/lib/file-store';
+import { CacheEntity } from '@db';
 
 @Injectable()
 export class OpenRs2Service {
@@ -12,10 +19,50 @@ export class OpenRs2Service {
     }
 
     async importCache(
+        cache: OpenRs2Cache
+    ): Promise<void> {
+        const diskCacheBuffer = await this.getDiskCache(cache.id, cache.scope);
+        const jsZip = new JSZip();
+        const diskCacheZip = await jsZip.loadAsync(Buffer.from(diskCacheBuffer));
+        const filePaths = Object.keys(diskCacheZip.files);
+
+        const packedCache: PackedFileStore = {};
+
+        for (const filePath of filePaths) {
+            // Make sure the file name includes 'main_file_cache' in the name
+            if (!filePath?.includes(packedFileStoreFileName)) {
+                continue;
+            }
+
+            const fileData = await diskCacheZip.file(filePath)?.async('nodebuffer');
+            const fileName = filePath.substring(filePath.indexOf(packedFileStoreFileName));
+            if (fileData?.length) {
+                packedCache[fileName] = fileData;
+            } else {
+                console.error(`${filePath} is empty or unable to be decompressed!`);
+            }
+        }
+
+        const { dataFile, indexFiles } = readPackedFileStore(packedCache);
+
+        const cacheEntity: CacheEntity = {
+            name: `open-rs2-cache-${this.formatBuilds(cache.builds).replace(/, /g, '-')}`,
+            openRs2Id: cache.id,
+            dataFile,
+            indexFiles
+        };
+
+        console.log(filePaths, cacheEntity);
+    }
+
+    async getDiskCache(
         id: number,
         scope: OpenRs2Scope = 'runescape'
-    ): Promise<void> {
-
+    ): Promise<ArrayBuffer> {
+        return lastValueFrom(this.http.get(
+            `${openRs2Url}/caches/${scope}/${id}/disk.zip`,
+            { responseType: 'arraybuffer' },
+        ));
     }
 
     async getCacheDetails(

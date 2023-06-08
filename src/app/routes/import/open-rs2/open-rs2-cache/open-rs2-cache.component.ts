@@ -46,8 +46,6 @@ export class OpenRs2CacheComponent implements OnInit, OnDestroy {
             } else {
                 this.cache = await this.openRs2Service.getCacheDetails(this.id, this.scope);
 
-                console.log(this.cache);
-
                 if (!this.cache) {
                     this.router.navigate(['/', 'import', 'openrs2']);
                 }
@@ -57,6 +55,14 @@ export class OpenRs2CacheComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.routeSubscription.unsubscribe();
+    }
+
+    async importCache(): Promise<void> {
+        if (!this.cache) {
+            return;
+        }
+
+        await this.openRs2Service.importCache(this.cache);
     }
 
     get builds(): string {
