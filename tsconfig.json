@@ -26,6 +26,7 @@
         "paths": {
             "@shared/*": [ "src/app/shared/*" ],
             "@routes/*": [ "src/app/routes/*" ],
+            "@db": [ "src/db.ts" ]
         }
     },
     "angularCompilerOptions": {

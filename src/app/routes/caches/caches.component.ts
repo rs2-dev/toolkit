@@ -6,5 +6,4 @@ import { Component } from '@angular/core';
     styleUrls: ['./caches.component.scss']
 })
 export class CachesComponent {
-
 }

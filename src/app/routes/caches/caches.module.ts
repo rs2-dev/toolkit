@@ -3,15 +3,19 @@ import { CommonModule } from '@angular/common';
 
 import { CachesRoutingModule } from './caches-routing.module';
 import { CachesComponent } from './caches.component';
+import { CacheListComponent } from './cache-list/cache-list.component';
+import { PageModule } from '@shared/components/page/page.module';
 
 
 @NgModule({
     declarations: [
-        CachesComponent
+        CachesComponent,
+        CacheListComponent
     ],
     imports: [
         CommonModule,
-        CachesRoutingModule
+        CachesRoutingModule,
+        PageModule
     ]
 })
 export class CachesModule {

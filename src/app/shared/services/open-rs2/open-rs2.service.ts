@@ -11,6 +11,13 @@ export class OpenRs2Service {
     constructor(private http: HttpClient) {
     }
 
+    async importCache(
+        id: number,
+        scope: OpenRs2Scope = 'runescape'
+    ): Promise<void> {
+
+    }
+
     async getCacheDetails(
         id: number,
         scope: OpenRs2Scope = 'runescape'

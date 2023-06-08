@@ -1,0 +1,7 @@
+<rs-page>
+    <div rs-content class="rs-cache-list">
+        <div *ngFor="let cache of cacheList$ | async">
+            <div>{{cache.name}}</div>
+        </div>
+    </div>
+</rs-page>
