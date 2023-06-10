@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { appBusyIndicator } from '@shared/signals/app-busy-indicator';
 
 @Component({
     selector: 'rs-root',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-    title = 'toolkit';
+
+    get appIsBusy(): boolean {
+        return appBusyIndicator();
+    }
+
 }

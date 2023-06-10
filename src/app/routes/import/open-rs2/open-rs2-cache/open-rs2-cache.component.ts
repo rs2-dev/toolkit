@@ -8,6 +8,7 @@ import {
     openRs2Url
 } from '@shared/services/open-rs2/open-rs2.model';
 import { OpenRs2Service } from '@shared/services/open-rs2/open-rs2.service';
+import { appBusyIndicator } from '@shared/signals/app-busy-indicator';
 
 @Component({
     selector: 'rs-open-rs2-cache',
@@ -62,7 +63,9 @@ export class OpenRs2CacheComponent implements OnInit, OnDestroy {
             return;
         }
 
+        appBusyIndicator.set(true);
         await this.openRs2Service.importCache(this.cache);
+        appBusyIndicator.set(false);
     }
 
     get builds(): string {

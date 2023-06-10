@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BusyIndicatorComponent } from '@shared/components/busy-indicator/busy-indicator.component';
 
 @NgModule({
     declarations: [
@@ -14,7 +15,8 @@ import { AppComponent } from './app.component';
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
-        HttpClientModule
+        HttpClientModule,
+        BusyIndicatorComponent
     ],
     providers: [],
     bootstrap: [AppComponent]

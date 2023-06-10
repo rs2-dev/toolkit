@@ -1,16 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SortDirection } from '@angular/material/sort';
-import { lastValueFrom, map, Observable } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 import { compareDesc, parseISO } from 'date-fns';
 import { Buffer } from 'buffer';
 import * as JSZip from 'jszip';
 import { OpenRs2Build, OpenRs2Cache, OpenRs2Game, OpenRs2Scope, openRs2Url } from './open-rs2.model';
-import {
-    PackedFileStore,
-    packedFileStoreFileName, readPackedFileStore
-} from '@rs2/file-store/lib/file-store';
-import { CacheEntity } from '@db';
+import { PackedFileStore, packedFileStoreFileName, readPackedFileStore } from '@rs2/file-store/lib/file-store';
+import { CacheEntity, db } from '@db';
 
 @Injectable()
 export class OpenRs2Service {
@@ -20,7 +17,7 @@ export class OpenRs2Service {
 
     async importCache(
         cache: OpenRs2Cache
-    ): Promise<void> {
+    ): Promise<CacheEntity> {
         const diskCacheBuffer = await this.getDiskCache(cache.id, cache.scope);
         const jsZip = new JSZip();
         const diskCacheZip = await jsZip.loadAsync(Buffer.from(diskCacheBuffer));
@@ -52,7 +49,9 @@ export class OpenRs2Service {
             indexFiles
         };
 
-        console.log(filePaths, cacheEntity);
+        cacheEntity.id = await db.caches.add(cacheEntity);
+
+        return cacheEntity;
     }
 
     async getDiskCache(
