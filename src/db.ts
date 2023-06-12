@@ -1,5 +1,6 @@
-import Dexie, { Table } from 'dexie';
+import Dexie, { liveQuery, Table } from 'dexie';
 import { DataFile, IndexFile } from '@rs2/file-store/lib/file-store';
+import { lastValueFrom } from 'rxjs';
 
 export interface CacheEntity {
     id?: number;
@@ -17,10 +18,10 @@ export class AppDB extends Dexie {
         this.version(3).stores({
             caches: '++id'
         });
-        // this.on('populate', () => this.populate());
     }
 
-    async populate() {
+    async getCaches(): Promise<CacheEntity[]> {
+        return this.caches.toArray();
     }
 }
 

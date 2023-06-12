@@ -5,6 +5,11 @@ import { CachesRoutingModule } from './caches-routing.module';
 import { CachesComponent } from './caches.component';
 import { CacheListComponent } from './cache-list/cache-list.component';
 import { PageModule } from '@shared/components/page/page.module';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -15,7 +20,12 @@ import { PageModule } from '@shared/components/page/page.module';
     imports: [
         CommonModule,
         CachesRoutingModule,
-        PageModule
+        PageModule,
+        MatButtonModule,
+        MatIconModule,
+        MatSortModule,
+        MatTableModule,
+        MatTooltipModule
     ]
 })
 export class CachesModule {

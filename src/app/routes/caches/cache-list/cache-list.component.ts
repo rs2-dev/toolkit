@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { liveQuery } from 'dexie';
-import { db } from '@db';
+import { CacheEntity, db } from '@db';
 
 @Component({
     selector: 'rs-cache-list',
@@ -9,6 +8,28 @@ import { db } from '@db';
 })
 export class CacheListComponent {
 
-    cacheList$ = liveQuery(() => db.caches.toArray());
+    cacheList$ = db.getCaches();
+
+    displayedColumns: string[] = [ 'id', 'name', 'source', 'size', 'indexes', 'actions' ];
+
+    displaySource(cache: CacheEntity): string {
+        if (!cache) {
+            return '';
+        }
+
+        if (!cache.openRs2Id) {
+            return 'Local';
+        }
+
+        return `OpenRS2 (ID: ${cache.openRs2Id})`;
+    }
+
+    displayIndexes(cache: CacheEntity): number {
+        if (!cache?.indexFiles?.length) {
+            return 0;
+        }
+
+        return cache.indexFiles.filter(i => i.indexNumber !== 255).length;
+    }
 
 }
