@@ -1,4 +1,11 @@
 .rs-busy-indicator {
+    p {
+        margin: 0;
+        padding: 0;
+        font-size: 24px;
+        font-weight: 500;
+    }
+
     &.rs-fullscreen {
         position: fixed;
         top: 0;
@@ -8,7 +15,12 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        flex-direction: column;
         z-index: 1000;
+
+        p {
+            margin-top: 32px;
+        }
     }
 
     &.rs-backdrop {

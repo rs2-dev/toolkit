@@ -10,6 +10,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { NavModule } from '@shared/components/nav/nav.module';
 import { OpenRs2Service } from '@shared/services/open-rs2/open-rs2.service';
@@ -29,9 +30,7 @@ import { OpenRs2CacheComponent } from './open-rs2-cache/open-rs2-cache.component
     ],
     imports: [
         CommonModule,
-        OpenRs2RoutingModule,
-        NavModule,
-        PageModule,
+        FormsModule,
         MatTableModule,
         MatSortModule,
         MatButtonModule,
@@ -40,8 +39,11 @@ import { OpenRs2CacheComponent } from './open-rs2-cache/open-rs2-cache.component
         MatPaginatorModule,
         MatCardModule,
         MatInputModule,
-        FormsModule,
+        MatSnackBarModule,
         MatSelectModule,
+        OpenRs2RoutingModule,
+        NavModule,
+        PageModule,
         OpenRs2LabelPipe
     ],
     providers: [

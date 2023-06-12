@@ -1,3 +1,4 @@
 <div class="rs-busy-indicator" [ngClass]="optionalClasses">
     <mat-progress-spinner [color]="color" mode="indeterminate" class="rs-spinner"></mat-progress-spinner>
+    <p *ngIf="text">{{ text }}</p>
 </div>

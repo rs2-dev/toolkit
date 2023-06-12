@@ -8,7 +8,8 @@ import {
     openRs2Url
 } from '@shared/services/open-rs2/open-rs2.model';
 import { OpenRs2Service } from '@shared/services/open-rs2/open-rs2.service';
-import { appBusyIndicator } from '@shared/signals/app-busy-indicator';
+import { hideAppBusyIndicator, showAppBusyIndicator } from '@shared/signals/app-busy-indicator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'rs-open-rs2-cache',
@@ -25,6 +26,7 @@ export class OpenRs2CacheComponent implements OnInit, OnDestroy {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
+        private snackBar: MatSnackBar,
         private openRs2Service: OpenRs2Service
     ) {
     }
@@ -63,9 +65,19 @@ export class OpenRs2CacheComponent implements OnInit, OnDestroy {
             return;
         }
 
-        appBusyIndicator.set(true);
-        await this.openRs2Service.importCache(this.cache);
-        appBusyIndicator.set(false);
+        showAppBusyIndicator('Importing cache from OpenRS2...');
+
+        try {
+            await this.openRs2Service.importCache(this.cache);
+        } catch (e) {
+            hideAppBusyIndicator();
+            this.snackBar.open('Error importing cache from OpenRS2.', 'Dismiss');
+            console.error(`Error importing cache from OpenRS2.`, e);
+            return;
+        }
+
+        hideAppBusyIndicator();
+        this.snackBar.open('Cache imported from OpenRS2 successfully.', 'Dismiss');
     }
 
     get builds(): string {

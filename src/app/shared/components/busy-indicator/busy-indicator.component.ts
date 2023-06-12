@@ -21,6 +21,9 @@ export class BusyIndicatorComponent {
     @Input()
     color: ThemePalette = 'primary';
 
+    @Input()
+    text?: string | undefined;
+
     get optionalClasses(): { [key: string]: boolean } {
         return {
             'rs-fullscreen': this.fullscreen,

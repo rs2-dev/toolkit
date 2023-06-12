@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { appBusyIndicator } from '@shared/signals/app-busy-indicator';
+import { appBusyIndicator, AppBusyIndicatorStatus } from '@shared/signals/app-busy-indicator';
 
 @Component({
     selector: 'rs-root',
@@ -8,7 +8,7 @@ import { appBusyIndicator } from '@shared/signals/app-busy-indicator';
 })
 export class AppComponent {
 
-    get appIsBusy(): boolean {
+    get appBusyIndicator(): AppBusyIndicatorStatus {
         return appBusyIndicator();
     }
 

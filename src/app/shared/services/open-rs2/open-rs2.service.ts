@@ -30,7 +30,7 @@ export class OpenRs2Service {
             if (!filePath?.includes(packedFileStoreFileName)) {
                 continue;
             }
-
+1
             const fileData = await diskCacheZip.file(filePath)?.async('nodebuffer');
             const fileName = filePath.substring(filePath.indexOf(packedFileStoreFileName));
             if (fileData?.length) {
