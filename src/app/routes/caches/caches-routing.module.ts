@@ -9,6 +9,10 @@ const routes: Routes = [
         component: CachesComponent,
         children: [
             {
+                path: ':cacheId',
+                loadChildren: () => import('./cache/cache.module').then(m => m.CacheModule)
+            },
+            {
                 path: '',
                 component: CacheListComponent
             }
