@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { SortDirection } from '@angular/material/sort';
 import { lastValueFrom } from 'rxjs';
 import { compareDesc, parseISO } from 'date-fns';
 import { Buffer } from 'buffer';
 import * as JSZip from 'jszip';
+
 import { OpenRs2Build, OpenRs2Cache, OpenRs2Game, OpenRs2Scope, openRs2Url } from './open-rs2.model';
 import { PackedFileStore, packedFileStoreFileName, readPackedFileStore } from '@rs2/file-store/lib/file-store';
 import { CacheEntity, db } from '@db';
+import { hideAppBusyIndicator, showAppBusyIndicator } from '@shared/signals/app-busy-indicator';
 
 @Injectable()
 export class OpenRs2Service {
@@ -16,44 +20,58 @@ export class OpenRs2Service {
     }
 
     async importCache(
+        router: Router,
+        snackBar: MatSnackBar,
         cache: OpenRs2Cache,
         name?: string
-    ): Promise<CacheEntity> {
-        const diskCacheBuffer = await this.getDiskCache(cache.id, cache.scope);
-        const jsZip = new JSZip();
-        const diskCacheZip = await jsZip.loadAsync(Buffer.from(diskCacheBuffer));
-        const filePaths = Object.keys(diskCacheZip.files);
+    ): Promise<CacheEntity | null> {
+        showAppBusyIndicator('Importing cache from OpenRS2...');
 
-        const packedCache: PackedFileStore = {};
+        try {
+            const diskCacheBuffer = await this.getDiskCache(cache.id, cache.scope);
+            const jsZip = new JSZip();
+            const diskCacheZip = await jsZip.loadAsync(Buffer.from(diskCacheBuffer));
+            const filePaths = Object.keys(diskCacheZip.files);
 
-        for (const filePath of filePaths) {
-            // Make sure the file name includes 'main_file_cache' in the name
-            if (!filePath?.includes(packedFileStoreFileName)) {
-                continue;
+            const packedCache: PackedFileStore = {};
+
+            for (const filePath of filePaths) {
+                // Make sure the file name includes 'main_file_cache' in the name
+                if (!filePath?.includes(packedFileStoreFileName)) {
+                    continue;
+                }
+
+                const fileData = await diskCacheZip.file(filePath)?.async('nodebuffer');
+                const fileName = filePath.substring(filePath.indexOf(packedFileStoreFileName));
+                if (fileData?.length) {
+                    packedCache[fileName] = fileData;
+                } else {
+                    console.error(`${filePath} is empty or unable to be decompressed!`);
+                }
             }
 
-            const fileData = await diskCacheZip.file(filePath)?.async('nodebuffer');
-            const fileName = filePath.substring(filePath.indexOf(packedFileStoreFileName));
-            if (fileData?.length) {
-                packedCache[fileName] = fileData;
-            } else {
-                console.error(`${filePath} is empty or unable to be decompressed!`);
-            }
+            const { dataFile, indexFiles } = readPackedFileStore(packedCache);
+
+            const cacheEntity: CacheEntity = {
+                name: name || `open-rs2-cache-${this.formatBuilds(cache.builds).replace(/, /g, '-')}`,
+                source: 'openrs2',
+                openRs2Data: cache,
+                dataFile,
+                indexFiles
+            };
+
+            cacheEntity.id = await db.caches.add(cacheEntity);
+
+            hideAppBusyIndicator();
+            await router.navigate([ '/', 'caches', cacheEntity.id ]);
+            snackBar.open('Cache imported from OpenRS2 successfully.', 'Dismiss');
+            return cacheEntity;
+        } catch (e) {
+            hideAppBusyIndicator();
+            snackBar.open('Error importing cache from OpenRS2.', 'Dismiss');
+            console.error(`Error importing cache from OpenRS2.`, e);
+            return null;
         }
-
-        const { dataFile, indexFiles } = readPackedFileStore(packedCache);
-
-        const cacheEntity: CacheEntity = {
-            name: name || `open-rs2-cache-${this.formatBuilds(cache.builds).replace(/, /g, '-')}`,
-            source: 'openrs2',
-            openRs2Data: cache,
-            dataFile,
-            indexFiles
-        };
-
-        cacheEntity.id = await db.caches.add(cacheEntity);
-
-        return cacheEntity;
     }
 
     async getDiskCache(

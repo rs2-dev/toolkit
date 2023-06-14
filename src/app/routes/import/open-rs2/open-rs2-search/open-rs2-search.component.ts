@@ -1,4 +1,6 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
@@ -36,7 +38,9 @@ export class OpenRs2SearchComponent implements AfterViewInit {
     currentSearch: string = '';
     currentGame: string = 'runescape';
 
-    constructor(private openRs2Service: OpenRs2Service) {
+    constructor(private router: Router,
+                private snackBar: MatSnackBar,
+                private openRs2Service: OpenRs2Service) {
     }
 
     async ngAfterViewInit(): Promise<void> {
@@ -51,6 +55,10 @@ export class OpenRs2SearchComponent implements AfterViewInit {
         this.filterData(false);
 
         this.dataSource.paginator = this.paginator;
+    }
+
+    importCache(cache: OpenRs2Cache): void {
+        this.openRs2Service.importCache(this.router, this.snackBar, cache);
     }
 
     searchChanged(): void {
