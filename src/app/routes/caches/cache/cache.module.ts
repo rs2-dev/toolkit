@@ -6,6 +6,10 @@ import { CacheRoutingModule } from './cache-routing.module';
 import { CacheComponent } from './cache.component';
 import { CacheDetailsComponent } from './cache-details/cache-details.component';
 import { PageModule } from '@shared/components/page/page.module';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -17,7 +21,11 @@ import { PageModule } from '@shared/components/page/page.module';
         CommonModule,
         CacheRoutingModule,
         PageModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        MatButtonModule,
+        MatIconModule,
+        MatTableModule,
+        MatTooltipModule
     ]
 })
 export class CacheModule {
