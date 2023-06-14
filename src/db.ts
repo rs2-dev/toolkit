@@ -26,6 +26,10 @@ export class AppDB extends Dexie {
     async getCaches(): Promise<CacheEntity[]> {
         return this.caches.orderBy('id').reverse().toArray();
     }
+
+    async findCacheById(id: number): Promise<CacheEntity | undefined> {
+        return this.caches.get(id);
+    }
 }
 
 export const db = new AppDB();

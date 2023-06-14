@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { CacheRoutingModule } from './cache-routing.module';
 import { CacheComponent } from './cache.component';
@@ -15,7 +16,8 @@ import { PageModule } from '@shared/components/page/page.module';
     imports: [
         CommonModule,
         CacheRoutingModule,
-        PageModule
+        PageModule,
+        MatSnackBarModule
     ]
 })
 export class CacheModule {
