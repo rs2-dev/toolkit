@@ -23,7 +23,7 @@ a {
     color: mat.get-color-from-palette($accent-palette, 300);
     text-decoration: none;
 
-    &:hover {
+    &:not(.mdc-fab):hover {
         text-decoration: underline;
     }
 }
