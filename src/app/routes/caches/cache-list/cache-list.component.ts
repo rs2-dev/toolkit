@@ -13,22 +13,19 @@ export class CacheListComponent {
     displayedColumns: string[] = [ 'id', 'name', 'source', 'size', 'indexes', 'actions' ];
 
     displaySource(cache: CacheEntity): string {
-        if (!cache) {
+        if (!cache?.source) {
             return '';
         }
 
-        if (!cache.openRs2Id) {
-            return 'Local';
-        }
-
-        return `OpenRS2 (ID: ${cache.openRs2Id})`;
+        return cache.source === 'local' ? 'Local' : `OpenRS2 (ID: ${cache.openRs2Data?.id || 'Unknown'})`;
     }
 
-    displayIndexes(cache: CacheEntity): number {
+    indexCount(cache: CacheEntity): number {
         if (!cache?.indexFiles?.length) {
             return 0;
         }
 
+        // Do not include the main index in the count (id 255)
         return cache.indexFiles.filter(i => i.indexNumber !== 255).length;
     }
 

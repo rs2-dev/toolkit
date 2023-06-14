@@ -16,7 +16,8 @@ export class OpenRs2Service {
     }
 
     async importCache(
-        cache: OpenRs2Cache
+        cache: OpenRs2Cache,
+        name?: string
     ): Promise<CacheEntity> {
         const diskCacheBuffer = await this.getDiskCache(cache.id, cache.scope);
         const jsZip = new JSZip();
@@ -30,7 +31,7 @@ export class OpenRs2Service {
             if (!filePath?.includes(packedFileStoreFileName)) {
                 continue;
             }
-1
+
             const fileData = await diskCacheZip.file(filePath)?.async('nodebuffer');
             const fileName = filePath.substring(filePath.indexOf(packedFileStoreFileName));
             if (fileData?.length) {
@@ -43,8 +44,9 @@ export class OpenRs2Service {
         const { dataFile, indexFiles } = readPackedFileStore(packedCache);
 
         const cacheEntity: CacheEntity = {
-            name: `open-rs2-cache-${this.formatBuilds(cache.builds).replace(/, /g, '-')}`,
-            openRs2Id: cache.id,
+            name: name || `open-rs2-cache-${this.formatBuilds(cache.builds).replace(/, /g, '-')}`,
+            source: 'openrs2',
+            openRs2Data: cache,
             dataFile,
             indexFiles
         };

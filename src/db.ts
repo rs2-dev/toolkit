@@ -1,10 +1,14 @@
 import Dexie, { Table } from 'dexie';
 import { DataFile, IndexFile } from '@rs2/file-store/lib/file-store';
+import { OpenRs2Cache, OpenRs2Scope } from '@shared/services/open-rs2/open-rs2.model';
+
+export type CacheSource = 'openrs2' | 'local';
 
 export interface CacheEntity {
     id?: number;
     name: string;
-    openRs2Id?: number;
+    source: CacheSource;
+    openRs2Data?: OpenRs2Cache;
     dataFile?: DataFile;
     indexFiles?: IndexFile[];
 }
