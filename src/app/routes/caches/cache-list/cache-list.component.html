@@ -14,7 +14,21 @@
 
             <ng-container matColumnDef="source">
                 <th mat-header-cell *matHeaderCellDef> Source </th>
-                <td mat-cell *matCellDef="let cache"> {{ displaySource(cache) }} </td>
+                <td mat-cell *matCellDef="let cache">
+                    <ng-container *ngIf="cache.source === 'local'">
+                        Local
+                    </ng-container>
+
+                    <ng-container *ngIf="cache.source === 'openrs2' && !cache.openRs2Data">
+                        OpenRS2
+                    </ng-container>
+
+                    <ng-container *ngIf="cache.source === 'openrs2' && cache.openRs2Data">
+                        <a [href]="openRs2Url + '/caches/' + (cache.openRs2Data.scope || 'runescape') + '/' + cache.openRs2Data.id" target="_blank">
+                            OpenRS2 (ID: {{ cache.openRs2Data.id }})
+                        </a>
+                    </ng-container>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="size">
@@ -30,7 +44,8 @@
             <ng-container matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef> Actions </th>
                 <td mat-cell *matCellDef="let cache">
-                    <button mat-icon-button matTooltip="Cache details">
+                    <button mat-icon-button matTooltip="Cache details"
+                            [routerLink]="[ cache.id ]">
                         <mat-icon>description</mat-icon>
                     </button>
 

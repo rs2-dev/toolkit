@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CacheEntity, db } from '@db';
+import { openRs2Url } from '@shared/services/open-rs2/open-rs2.model';
 
 @Component({
     selector: 'rs-cache-list',
@@ -8,17 +9,11 @@ import { CacheEntity, db } from '@db';
 })
 export class CacheListComponent {
 
+    readonly openRs2Url = openRs2Url;
+
     cacheList$ = db.getCaches();
 
     displayedColumns: string[] = [ 'id', 'name', 'source', 'size', 'indexes', 'actions' ];
-
-    displaySource(cache: CacheEntity): string {
-        if (!cache?.source) {
-            return '';
-        }
-
-        return cache.source === 'local' ? 'Local' : `OpenRS2 (ID: ${cache.openRs2Data?.id || 'Unknown'})`;
-    }
 
     indexCount(cache: CacheEntity): number {
         if (!cache?.indexFiles?.length) {

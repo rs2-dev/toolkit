@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { CacheRoutingModule } from './cache-routing.module';
 import { CacheComponent } from './cache.component';
 import { CacheDetailsComponent } from './cache-details/cache-details.component';
+import { PageModule } from '@shared/components/page/page.module';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { CacheDetailsComponent } from './cache-details/cache-details.component';
     ],
     imports: [
         CommonModule,
-        CacheRoutingModule
+        CacheRoutingModule,
+        PageModule
     ]
 })
 export class CacheModule {

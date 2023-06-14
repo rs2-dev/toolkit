@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use '@angular/material' as mat;
 @import 'theme';
 
@@ -6,6 +7,9 @@
 @include mat.all-component-themes($toolkit-theme);
 @include mat.typography-hierarchy($toolkit-typography);
 
+$color-config: mat.get-color-config($toolkit-theme);
+$accent-palette: map.get($color-config, 'accent');
+
 html, body {
     height: 100%;
 }
@@ -13,6 +17,15 @@ html, body {
 body {
     margin: 0;
     font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+a {
+    color: mat.get-color-from-palette($accent-palette, 300);
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
 }
 
 .mdc-fab--extended, .mdc-button {
