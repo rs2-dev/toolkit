@@ -1,0 +1,15 @@
+<div class="rs-folder mat-elevation-z7">
+    <div class="rs-breadcrumb" *ngIf="breadcrumb?.length">
+        <span class="rs-link" *ngFor="let item of breadcrumb">
+            &nbsp;&gt;&nbsp;
+            <a *ngIf="item.link" [routerLink]="item.link">{{ item.text }}</a>
+            <span *ngIf="!item.link">{{ item.text }}</span>
+        </span>
+
+        <mat-divider class="rs-breadcrumb-divider"></mat-divider>
+    </div>
+
+    <div class="rs-files">
+        <ng-content select="rs-file"></ng-content>
+    </div>
+</div>

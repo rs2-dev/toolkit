@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { FolderModule } from '@shared/components/folder/folder.module';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         MatButtonModule,
         MatIconModule,
         MatTableModule,
-        MatTooltipModule
+        MatTooltipModule,
+        FolderModule
     ]
 })
 export class CacheModule {

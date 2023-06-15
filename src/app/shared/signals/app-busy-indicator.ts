@@ -10,6 +10,7 @@ export const appBusyIndicator = signal<AppBusyIndicatorStatus>({
 });
 
 export const showAppBusyIndicator = (text?: string | undefined) =>
-    appBusyIndicator.set({ visible: true, text });
+    setTimeout(() => appBusyIndicator.set({ visible: true, text }), 0);
 
-export const hideAppBusyIndicator = () => appBusyIndicator.set({ visible: false });
+export const hideAppBusyIndicator = () =>
+    setTimeout(() => appBusyIndicator.set({ visible: false }), 0);

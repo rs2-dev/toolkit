@@ -9,7 +9,7 @@ import { Buffer } from 'buffer';
 import * as JSZip from 'jszip';
 
 import { OpenRs2Build, OpenRs2Cache, OpenRs2Game, OpenRs2Scope, openRs2Url } from './open-rs2.model';
-import { PackedFileStore, packedFileStoreFileName, readPackedFileStore } from '@rs2/file-store/lib/file-store';
+import { PackedFileStore, packedFileStoreFileName, readPackedFileStore } from '@rs2/cache';
 import { CacheEntity, db } from '@db';
 import { hideAppBusyIndicator, showAppBusyIndicator } from '@shared/signals/app-busy-indicator';
 

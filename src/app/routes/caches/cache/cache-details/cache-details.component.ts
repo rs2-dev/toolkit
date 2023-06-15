@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 
 import { hideAppBusyIndicator, showAppBusyIndicator } from '@shared/signals/app-busy-indicator';
 import { CacheEntity, db } from '@db';
-import { IndexFile } from '@rs2/file-store/lib/file-store';
+import { IndexFile } from '@rs2/cache';
 import { jagIndexNames, js5IndexNames } from '@shared/services/cache/cache.model';
 
 @Component({

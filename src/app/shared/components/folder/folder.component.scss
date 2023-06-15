@@ -1,0 +1,17 @@
+.rs-folder {
+    background-color: rgb(66, 66, 66);
+    padding: 16px;
+
+    .rs-breadcrumb {
+    }
+
+    .rs-breadcrumb-divider {
+        margin: 12px 0;
+    }
+
+    .rs-files {
+        display: grid;
+        grid-gap: 8px;
+        grid-template-columns: repeat(auto-fill, 120px);
+    }
+}

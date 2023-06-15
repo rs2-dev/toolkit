@@ -28,12 +28,13 @@
             "@routes/*": [ "src/app/routes/*" ],
             "@db": [ "src/db.ts" ],
             "buffer": [ "./node_modules/buffer" ],
+            "events": [ "./node_modules/events/" ],
             "http": ["./node_modules/stream-http"],
             "https": ["./node_modules/https-browserify"],
             "os": [ "./node_modules/os-browserify/browser" ],
             "process": [ "./node_modules/process/browser" ],
             "stream": ["./node_modules/stream-browserify"],
-            "util/": ["./node_modules/util/"],
+            "util": ["./node_modules/util/"],
             "zlib": ["./node_modules/browserify-zlib"]
         }
     },

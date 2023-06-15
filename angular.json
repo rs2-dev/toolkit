@@ -58,7 +58,8 @@
                         "scripts": [],
                         "allowedCommonJsDependencies": [
                             "buffer",
-                            "jszip"
+                            "jszip",
+                            "@rs2/cache"
                         ]
                     },
                     "configurations": {
