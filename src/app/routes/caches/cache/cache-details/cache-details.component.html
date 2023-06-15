@@ -2,21 +2,13 @@
     <div rs-content class="rs-cache-details" *ngIf="cache">
         <h1 class="mat-headline-5">{{ cache.name }}</h1>
 
-        <rs-folder [breadcrumb]="[ { text: 'Test Cache', link: '.' }, { text: 'Test Folder' } ]">
-            <rs-file name="Test Folder 1" type="folder"></rs-file>
-            <rs-file name="Test Folder 2" type="folder"></rs-file>
-            <rs-file name="Test Folder 3" type="folder"></rs-file>
-            <rs-file name="Test Folder 4" type="folder"></rs-file>
-            <rs-file name="Test Folder 5" type="folder"></rs-file>
-            <rs-file name="Test Folder 6" type="folder"></rs-file>
-            <rs-file name="Test Folder 7" type="folder"></rs-file>
-            <rs-file name="Test File 1" type="file"></rs-file>
-            <rs-file name="Test File 2" type="file"></rs-file>
-            <rs-file name="Test File 3" type="file"></rs-file>
-            <rs-file name="Test File 4" type="file"></rs-file>
-        </rs-folder>
+<!--        <rs-folder *ngIf="indexFiles.length" [breadcrumb]="[ { text: cache.name } ]">-->
+<!--            <rs-file *ngFor="let index of indexFiles"-->
+<!--                     [name]="'Index ' + index.indexNumber + ': ' + indexName(index.indexNumber)"-->
+<!--                     type="folder"></rs-file>-->
+<!--        </rs-folder>-->
 
-        <br /><br /><br /><br /><br /><br />
+<!--        <br /><br /><br /><br /><br /><br />-->
 
         <ng-container *ngIf="indexFiles.length">
             <h2 class="mat-headline-6">Indexes</h2>
