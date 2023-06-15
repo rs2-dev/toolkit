@@ -9,7 +9,7 @@ import { Buffer } from 'buffer';
 import * as JSZip from 'jszip';
 
 import { OpenRs2Build, OpenRs2Cache, OpenRs2Game, OpenRs2Scope, openRs2Url } from './open-rs2.model';
-import { PackedFileStore, packedFileStoreFileName, readPackedFileStore } from '@rs2/cache';
+import { PackedCache, packedCacheFileName, readPackedCache } from '@rs2/cache';
 import { CacheEntity, db } from '@db';
 import { hideAppBusyIndicator, showAppBusyIndicator } from '@shared/signals/app-busy-indicator';
 
@@ -33,16 +33,16 @@ export class OpenRs2Service {
             const diskCacheZip = await jsZip.loadAsync(Buffer.from(diskCacheBuffer));
             const filePaths = Object.keys(diskCacheZip.files);
 
-            const packedCache: PackedFileStore = {};
+            const packedCache: PackedCache = {};
 
             for (const filePath of filePaths) {
                 // Make sure the file name includes 'main_file_cache' in the name
-                if (!filePath?.includes(packedFileStoreFileName)) {
+                if (!filePath?.includes(packedCacheFileName)) {
                     continue;
                 }
 
                 const fileData = await diskCacheZip.file(filePath)?.async('nodebuffer');
-                const fileName = filePath.substring(filePath.indexOf(packedFileStoreFileName));
+                const fileName = filePath.substring(filePath.indexOf(packedCacheFileName));
                 if (fileData?.length) {
                     packedCache[fileName] = fileData;
                 } else {
@@ -50,7 +50,7 @@ export class OpenRs2Service {
                 }
             }
 
-            const { dataFile, indexFiles } = readPackedFileStore(packedCache);
+            const { dataFile, indexFiles } = readPackedCache(packedCache);
 
             const cacheEntity: CacheEntity = {
                 name: name || `open-rs2-cache-${this.formatBuilds(cache.builds).replace(/, /g, '-')}`,
