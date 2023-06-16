@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
@@ -13,7 +13,7 @@ import { jagIndexNames, js5IndexNames } from '@shared/services/cache/cache.model
     templateUrl: './cache-details.component.html',
     styleUrls: ['./cache-details.component.scss']
 })
-export class CacheDetailsComponent {
+export class CacheDetailsComponent implements OnDestroy {
 
     readonly displayedColumns: string[] = [ 'index', 'name', 'size', 'fileCount', 'actions' ];
 
@@ -43,6 +43,10 @@ export class CacheDetailsComponent {
 
             this.getCache(cacheId);
         });
+    }
+
+    ngOnDestroy() {
+        this.routeSubscription.unsubscribe();
     }
 
     async getCache(cacheId: number): Promise<void> {

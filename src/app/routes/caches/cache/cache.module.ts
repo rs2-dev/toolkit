@@ -11,12 +11,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FolderModule } from '@shared/components/folder/folder.module';
+import { IndexDetailsComponent } from './index-details/index-details.component';
 
 
 @NgModule({
     declarations: [
         CacheComponent,
-        CacheDetailsComponent
+        CacheDetailsComponent,
+        IndexDetailsComponent
     ],
     imports: [
         CommonModule,
