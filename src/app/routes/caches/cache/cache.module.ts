@@ -12,6 +12,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FolderModule } from '@shared/components/folder/folder.module';
 import { IndexDetailsComponent } from './index-details/index-details.component';
+import { NameHashPipe } from '@shared/pipes/name-hash.pipe';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { IndexDetailsComponent } from './index-details/index-details.component';
         MatIconModule,
         MatTableModule,
         MatTooltipModule,
-        FolderModule
+        FolderModule,
+        NameHashPipe
     ]
 })
 export class CacheModule {

@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { hideAppBusyIndicator, showAppBusyIndicator } from '@shared/signals/app-busy-indicator';
 import { jagIndexNames, js5IndexNames } from '@shared/services/cache/cache.model';
-import { getFileData, IndexFile, Js5Archive, decodeJs5Archive, unpackJs5File, Js5File } from '@rs2/cache';
+import { getFileData, IndexFile, Js5Archive, decodeJs5Archive, unpackJs5File, Js5File, Js5Group } from '@rs2/cache';
 import { DataBuffer } from '@rs2/buffer';
 
 @Component({
@@ -16,6 +16,8 @@ import { DataBuffer } from '@rs2/buffer';
 export class IndexDetailsComponent implements OnDestroy {
 
     // @todo support JAG (earlier) format indexes - 15/Jun/23 - Kiko
+
+    readonly displayedColumns: string[] = [ 'id', 'name', 'files', 'version', 'actions' ];
 
     cache: CacheEntity | undefined;
     index: IndexFile | undefined;
@@ -134,6 +136,10 @@ export class IndexDetailsComponent implements OnDestroy {
         }
 
         return this.cache.dataFile.cacheFormat === 'js5' ? js5IndexNames[this.index.indexNumber] : jagIndexNames[this.index.indexNumber];
+    }
+
+    get groups(): Js5Group[] {
+        return this.js5Archive?.groups || [];
     }
 
 }
